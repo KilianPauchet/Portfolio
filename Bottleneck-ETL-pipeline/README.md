@@ -30,7 +30,7 @@
 
 ## 🎯 Vue d'ensemble
 
-**Contexte :** (Projet pédagogique, OpenClassroom - parcours Data-Analyst) -- Bottleneck, une entreprise e-commerce spécialisée dans les vins et spiritueux, disposait de données dispersées entre un ERP, une plateforme web et une table de liaison. Cette fragmentation rendait difficile le suivi du Chiffre d'Affaires et l'optimisation des stocks et des prix.
+**Contexte :** (Projet pédagogique, OpenClassrooms - parcours Data Analyst) — Bottleneck, une entreprise e-commerce spécialisée dans les vins et spiritueux, disposait de données dispersées entre un ERP, une plateforme web et une table de liaison. Cette fragmentation rendait difficile le suivi du Chiffre d'Affaires et l'optimisation des stocks et des prix.
 
 **Problématique :** Comment consolider ces sources hétérogènes, calculer des indicateurs fiables de performance et identifier rapidement les leviers d'amélioration (produits sans ventes, anomalies de prix, marges, gestion des stocks) ?
 
@@ -42,14 +42,12 @@
 
 ## 🏷️ Type de projet
 
-┌─────────────────────────────────────────────────────────────┐
-| Type                                               | Inclus |
-|----------------------------------------------------|--------|
-| 🔄 Data Pipeline / ETL                             | ✅    |
-| 🧹 Data Cleaning / Wrangling                       | ✅    |
-| 📊 Dashboard / Data Visualization                  | ✅    |
-| 🏭 Industrialisation (tests, logs, automatisation) | ✅    |
-└─────────────────────────────────────────────────────────────┘
+| Type | Inclus |
+|------|--------|
+| 🔄 Data Pipeline / ETL | ✅ |
+| 🧹 Data Cleaning / Wrangling | ✅ |
+| 📊 Dashboard / Data Visualization | ✅ |
+| 🏭 Industrialisation (tests, logs, automatisation) | ✅ |
 
 ---
 
@@ -64,17 +62,15 @@
 
 ## 🛠️ Stack Technique
 
-┌────────────────────────────────────────────────────────────────────────┐
-| Catégorie                  | Outils                                    |
-|----------------------------|-------------------------------------------|
-| **Traitement des données** | Python, Pandas, NumPy                     |
-| **Base de données**        | MySQL 8.x + SQLAlchemy                    |
-| **Visualisation**          | Matplotlib, Seaborn, Power BI             |
-| **Qualité & Tests**        | pytest (12 tests unitaires), logging      |
-| **Automatisation**         | Script `.bat` + Windows Task Scheduler    |
-| **Sécurité**               | python-dotenv (variables d'environnement) |
-| **Versioning**             | Git / GitHub                              |
-└────────────────────────────────────────────────────────────────────────┘
+| Catégorie | Outils |
+|-----------|--------|
+| **Traitement des données** | Python, Pandas, NumPy |
+| **Base de données** | MySQL 8.x + SQLAlchemy |
+| **Visualisation** | Matplotlib, Seaborn, Power BI |
+| **Qualité & Tests** | pytest (12 tests unitaires), logging |
+| **Automatisation** | Script `.bat` + Windows Task Scheduler |
+| **Sécurité** | python-dotenv (variables d'environnement) |
+| **Versioning** | Git / GitHub |
 
 **Périmètre :** Données produit niveau SKU (prix, stock, ventes). Hors scope : prévisions, données client, marketing, temps réel.
 
@@ -83,7 +79,7 @@
 ## 🗂️ Architecture du Projet
 
 ```
-bottleneck-data-pipeline/
+bottleneck-etl-pipeline/
 │
 ├── 📂 DATA/
 │   ├── erp.csv                      ← Données produits (prix, stock, prix d'achat)
@@ -161,7 +157,7 @@ bottleneck-data-pipeline/
 │                    LOAD (database.py)                   │
 │   Export CSV  →  dataset_final_propre.csv               │
 │   Export SQL  →  MySQL (table analyse_bottleneck)       │
-│   Connexion Power BI  →  Dashboard décisionnel          │ 
+│   Connexion Power BI  →  Dashboard décisionnel          │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -169,19 +165,17 @@ bottleneck-data-pipeline/
 
 ## 📊 Analyses & Métriques
 
-┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-| Métrique             | Définition                          | Intérêt métier                      |
-|----------------------|-------------------------------------|-------------------------------------|
-| **CA Total**         | Prix × Ventes par produit           | Performance globale                 |
-| **CA par produit**   | Contribution individuelle au revenu | Identification des produits phares  |
-| **Taux sans ventes** | % de références à 0 vente           | Libération de trésorerie            |
-| **Outliers IQR**     | Prix > Q3 + 1.5×IQR                 | Détection gamme Prestige            |
-| **Outliers Z-score** | Prix > μ + 3σ                       | Détection anomalies extrêmes        |
-| **Pareto CA**        | % du catalogue → 80% du CA          | Focus ressources commerciales       |
-| **Pareto Quantités** | % du catalogue → 80% des ventes     | Gestion logistique                  |
-| **Taux de marge**    | (Prix - Prix achat) / Prix × 100    | Rentabilité par produit             |
-| **Mois de stock**    | Stock / Ventes mensuelles           | Risque d'immobilisation             |
-└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+| Métrique | Définition | Intérêt métier |
+|----------|------------|----------------|
+| **CA Total** | Prix × Ventes par produit | Performance globale |
+| **CA par produit** | Contribution individuelle au revenu | Identification des produits phares |
+| **Taux sans ventes** | % de références à 0 vente | Libération de trésorerie |
+| **Outliers IQR** | Prix > Q3 + 1.5×IQR | Détection gamme Prestige |
+| **Outliers Z-score** | Prix > μ + 3σ | Détection anomalies extrêmes |
+| **Pareto CA** | % du catalogue → 80% du CA | Focus ressources commerciales |
+| **Pareto Quantités** | % du catalogue → 80% des ventes | Gestion logistique |
+| **Taux de marge** | (Prix - Prix achat) / Prix × 100 | Rentabilité par produit |
+| **Mois de stock** | Stock / Ventes mensuelles | Risque d'immobilisation |
 
 **Méthodes utilisées :** Nettoyage défensif, validation de schéma, statistiques IQR, Z-score, analyse de Pareto, visualisation multi-graphiques.
 
@@ -208,15 +202,13 @@ Certains champagnes haut de gamme affichent plus de 900 mois de couverture de st
 
 ## 📌 Recommandations
 
-┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-| Priorité       | Recommandation                                                     | Basée sur | Responsable suggéré                |
-|----------------|--------------------------------------------------------------------|-----------|------------------------------------|
-| 🔴 **Haute**   | Corriger le produit vendu à perte (erreur ERP probable)            | Insight 5 | Data Analyst / Contrôle de gestion |
-| 🔴 **Haute**   | Audit des produits sans ventes pour libérer la trésorerie          | Insight 2 | Direction Supply Chain / Achats    |
-| 🟠 **Moyenne** | Renforcer le marketing sur la gamme Prestige sans baisser les prix | Insight 3 | Marketing / E-commerce             |
-| 🟠 **Moyenne** | Réduire le stock dormant des champagnes (900+ mois de couverture)  | Insight 4 | Supply Chain                       |
-| 🟡 **Basse**   | Monitoring mensuel du taux de produits sans ventes                 | Insight 2 | Data Analyst / Opérations          |
-└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+| Priorité | Recommandation | Basée sur | Responsable suggéré |
+|----------|---------------|-----------|---------------------|
+| 🔴 **Haute** | Corriger le produit vendu à perte (erreur ERP probable) | Insight 5 | Data Analyst / Contrôle de gestion |
+| 🔴 **Haute** | Audit des produits sans ventes pour libérer la trésorerie | Insight 2 | Direction Supply Chain / Achats |
+| 🟠 **Moyenne** | Renforcer le marketing sur la gamme Prestige sans baisser les prix | Insight 3 | Marketing / E-commerce |
+| 🟠 **Moyenne** | Réduire le stock dormant des champagnes (900+ mois de couverture) | Insight 4 | Supply Chain |
+| 🟡 **Basse** | Monitoring mensuel du taux de produits sans ventes | Insight 2 | Data Analyst / Opérations |
 
 ---
 
@@ -256,32 +248,34 @@ Le pipeline est planifié via Windows Task Scheduler pour une exécution quotidi
 
 **Améliorations prévues :**
 
-┌─────────────────────────────────────────────────────────────────────────────────────────────┐
-| Amélioration                                         | Impact                               |
-|------------------------------------------------------|--------------------------------------|
-| Migration Cloud (BigQuery + Airflow)                 | Scalabilité et orchestration avancée |
-| Dashboard web Streamlit                              | Accessibilité sans Power BI          |
-| Alertes automatiques (stock critique, marge négative)| Réactivité opérationnelle            |
-| Conteneurisation Docker                              | Portabilité et déploiement simplifié |
-| Tests d'intégration end-to-end                       | Couverture qualité complète          |
-└─────────────────────────────────────────────────────────────────────────────────────────────┘
+| Amélioration | Impact |
+|-------------|--------|
+| Migration Cloud (BigQuery + Airflow) | Scalabilité et orchestration avancée |
+| Dashboard web Streamlit | Accessibilité sans Power BI |
+| Alertes automatiques (stock critique, marge négative) | Réactivité opérationnelle |
+| Conteneurisation Docker | Portabilité et déploiement simplifié |
+| Tests d'intégration end-to-end | Couverture qualité complète |
 
 ---
 
 ## 📦 Livrables
 
-┌───────────────────────────────────────────────────────────────────────────────────────────┐
-| Livrable            | Description                       | Emplacement                     |
-|---------------------|-----------------------------------|---------------------------------|
-| Pipeline Python     | Code ETL complet modulaire        | `/`                             |
-| Dataset final       | Données nettoyées et enrichies    | `DATA/dataset_final_propre.csv` |
-| Graphiques          | 5 visuels d'analyse automatisés   | `OUTPUTS/`                      |
-| Dashboard Power BI  | Visualisation interactive métier  | `.pbix`                         |
-| Tests unitaires     | 12 tests pytest                   | `tests/`                        |
-| Logs                | Traçabilité horodatée             | `logs/`                         |
-| Automatisation      | Planification quotidienne         | `run_pipeline.bat`              |
-└───────────────────────────────────────────────────────────────────────────────────────────┘
+| Livrable | Description | Emplacement |
+|----------|-------------|-------------|
+| Pipeline Python | Code ETL complet modulaire | `/` |
+| Dataset final | Données nettoyées et enrichies | `DATA/dataset_final_propre.csv` |
+| Graphiques | 5 visuels d'analyse automatisés | `OUTPUTS/` |
+| Dashboard Power BI | Visualisation interactive métier | `.pbix` |
+| Tests unitaires | 12 tests pytest | `tests/` |
+| Logs | Traçabilité horodatée | `logs/` |
+| Automatisation | Planification quotidienne | `run_pipeline.bat` |
 
+---
+
+## 📊 Aperçu du Dashboard Power BI
+
+![Dashboard Power BI Partie Ventes](OUTPUTS/BottleneckVentes.png)
+![Dashboard Power BI Partie Stocks](OUTPUTS/BottleneckStock.png)
 
 ---
 
@@ -289,40 +283,39 @@ Le pipeline est planifié via Windows Task Scheduler pour une exécution quotidi
 
 1. **Cloner le dépôt :**
 ```bash
-   git clone https://github.com/KilianPauchet/bottleneck-data-pipeline.git
-   cd bottleneck-data-pipeline
+git clone https://github.com/KilianPauchet/bottleneck-etl-pipeline.git
+cd bottleneck-etl-pipeline
 ```
 
 2. **Installer les dépendances :**
 ```bash
-   pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 3. **Configurer les variables d'environnement :**
 
-   Créer un fichier `.env` à la racine du projet :
-
-┌───────────────────────────┐
-| DB_HOST=localhost         |
-| DB_PORT=3306              |
-| DB_NAME=bottleneck        |
-| DB_USER=ton_user          |
-| DB_PASSWORD=ton_password  |
-└───────────────────────────┘
+Créer un fichier `.env` à la racine du projet :
+```
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=bottleneck
+DB_USER=ton_user
+DB_PASSWORD=ton_password
+```
 
 4. **Créer la base de données MySQL :**
 ```sql
-   CREATE DATABASE bottleneck;
+CREATE DATABASE bottleneck;
 ```
 
 5. **Lancer le pipeline :**
 ```bash
-   python main.py
+python main.py
 ```
 
 6. **(Optionnel) Automatisation quotidienne :**
 
-   Exécuter `run_pipeline.bat` via Windows Task Scheduler pour une exécution automatique.
+Exécuter `run_pipeline.bat` via Windows Task Scheduler pour une exécution automatique.
 
 > **Prérequis :** Python 3.13+, MySQL 8.x en cours d'exécution en local.
 
