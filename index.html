@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kilian Pauchet — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    --ink:#12171F;
+    --ink-soft:#2B333D;
+    --paper:#EEF1F4;
+    --paper-raised:#FFFFFF;
+    --paper-alt:#E3E7EC;
+    --signal:#2F55E8;
+    --signal-dark:#1E3FC4;
+    --amber:#F2A93B;
+    --muted:#5B6472;
+    --line:#D7DCE2;
+    --radius-lg:20px;
+    --radius-md:14px;
+    --radius-sm:9px;
+    --shadow-card: 0 1px 2px rgba(18,23,31,0.04), 0 12px 32px -12px rgba(18,23,31,0.16);
+    --shadow-card-hover: 0 1px 2px rgba(18,23,31,0.05), 0 24px 48px -16px rgba(18,23,31,0.22);
+    --ff-display:'Space Grotesk', sans-serif;
+    --ff-body:'Inter', sans-serif;
+    --ff-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--ff-body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+  ul{margin:0;padding:0;list-style:none;}
+  button{font-family:inherit;}
+
+  .mono{font-family:var(--ff-mono);}
+
+  :focus-visible{
+    outline:2px solid var(--signal);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  /* ============ BACKGROUND GRID TEXTURE ============ */
+  .grid-texture{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background-image:
+      linear-gradient(to right, rgba(18,23,31,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(18,23,31,0.035) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.15) 620px, transparent 900px);
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    z-index:1;
+    max-width:1180px;
+    margin:0 auto;
+    padding:56px 32px 40px;
+  }
+  .hero-inner{
+    display:grid;
+    grid-template-columns:1.35fr 0.65fr;
+    align-items:center;
+    gap:48px;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    padding:52px 56px;
+    box-shadow:var(--shadow-card);
+  }
+  .eyebrow{
+    font-family:var(--ff-mono);
+    font-size:12.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 18px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--amber);
+    box-shadow:0 0 0 3px rgba(242,169,59,0.22);
+  }
+  .hero-inner h1{
+    font-family:var(--ff-display);
+    font-size:clamp(34px, 4.6vw, 54px);
+    font-weight:600;
+    line-height:1.05;
+    margin:0 0 16px;
+    letter-spacing:-0.01em;
+  }
+  .hero-inner h1 span{color:var(--signal);}
+  .tagline{
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:52ch;
+    margin:0 0 30px;
+  }
+  .hero-stats{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+    margin-bottom:32px;
+  }
+  .hero-stats div{border-left:2px solid var(--line); padding-left:14px;}
+  .hero-stats .num{
+    display:block;
+    font-family:var(--ff-mono);
+    font-size:20px;
+    font-weight:500;
+    color:var(--signal-dark);
+  }
+  .hero-stats .label{
+    display:block;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:2px;
+  }
+  .scroll-cue{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    font-family:var(--ff-mono);
+    font-size:13px;
+    text-decoration:none;
+    color:var(--ink);
+    border-bottom:1px solid var(--ink);
+    padding-bottom:3px;
+    transition:gap .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .scroll-cue:hover{gap:14px; color:var(--signal-dark); border-color:var(--signal-dark);}
+
+  /* photo / signature orbit */
+  .hero-photo{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+  .orbit{
+    position:relative;
+    width:220px;
+    height:220px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .orbit svg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    animation:spin 38s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .photo-circle{
+    position:relative;
+    z-index:1;
+    width:168px;
+    height:168px;
+    border-radius:50%;
+    background:linear-gradient(155deg, var(--signal) 0%, var(--signal-dark) 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    box-shadow:0 14px 30px -10px rgba(47,85,232,0.45);
+  }
+  /* Remplacez ce bloc par : <img src="votre-photo.jpg" alt="Photo de Prénom NOM"> */
+  .photo-circle span{
+    font-family:var(--ff-display);
+    font-size:44px;
+    font-weight:600;
+    color:#fff;
+    letter-spacing:0.02em;
+  }
+
+  /* ============ FILTERS ============ */
+  .filters{
+    position:sticky;
+    top:0;
+    z-index:5;
+    background:rgba(238,241,244,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:16px 32px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    max-width:1180px;
+    margin:24px auto 0;
+    border-radius:999px;
+    box-shadow:var(--shadow-card);
+  }
+  .filters-label{
+    font-size:12px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    padding-left:8px;
+    margin-right:2px;
+    white-space:nowrap;
+  }
+  .filter-btn{
+    font-family:var(--ff-body);
+    font-size:14.5px;
+    font-weight:500;
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    padding:9px 18px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:background .18s ease, color .18s ease, border-color .18s ease, transform .12s ease;
+  }
+  .filter-btn:hover{border-color:var(--signal); color:var(--signal-dark);}
+  .filter-btn.active{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:#fff;
+  }
+  .filter-btn:active{transform:scale(0.97);}
+  .filter-count{
+    font-family:var(--ff-mono);
+    font-size:11px;
+    margin-left:7px;
+    opacity:0.6;
+  }
+
+  /* ============ CAROUSEL ============ */
+  .carousel-section{
+    position:relative;
+    z-index:1;
+    max-width:1180px;
+    margin:56px auto 0;
+    padding:0 32px;
+  }
+  .section-heading{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:22px;
+    gap:16px;
+  }
+  .section-heading h2{
+    font-family:var(--ff-display);
+    font-size:22px;
+    font-weight:600;
+    margin:0;
+  }
+  .section-heading .hint{
+    font-family:var(--ff-mono);
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .carousel-wrap{
+    position:relative;
+  }
+  .carousel-track{
+    display:flex;
+    gap:26px;
+    overflow-x:auto;
+    scroll-snap-type:x proximity;
+    padding:14px 4vw 30px;
+    scrollbar-width:none;
+  }
+  .carousel-track::-webkit-scrollbar{display:none;}
+
+  .hover-zone{
+    position:absolute;
+    top:0; bottom:30px;
+    width:14%;
+    z-index:3;
+    cursor:pointer;
+  }
+  .hover-zone.left{left:0;}
+  .hover-zone.right{right:0;}
+
+  .card{
+    flex:0 0 auto;
+    width:min(78vw, 400px);
+    scroll-snap-align:center;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:var(--radius-md);
+    box-shadow:var(--shadow-card);
+    transition:transform .25s ease, opacity .25s ease, box-shadow .25s ease;
+    transform-origin:center;
+    display:flex;
+    flex-direction:column;
+  }
+  .card:hover, .card:focus-within{ box-shadow:var(--shadow-card-hover); }
+
+  .card-image{
+    height:180px;
+    border-radius:var(--radius-md) var(--radius-md) 0 0;
+    background:
+      repeating-linear-gradient(135deg, var(--paper-alt) 0px, var(--paper-alt) 2px, transparent 2px, transparent 14px),
+      linear-gradient(160deg, #DDE3EA 0%, #EDF0F4 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--ff-mono);
+    font-size:12px;
+    color:var(--muted);
+    text-align:center;
+    padding:12px;
+  }
+  /* Remplacez .card-image par : <img src="apercu-projet.jpg" alt="..."> */
+
+  /* ---- Mini-carousel d'images dans chaque carte ---- */
+  .card-media{
+    position:relative;
+    height:180px;
+    border-radius:var(--radius-md) var(--radius-md) 0 0;
+    overflow:hidden;
+    background:
+      repeating-linear-gradient(135deg, var(--paper-alt) 0px, var(--paper-alt) 2px, transparent 2px, transparent 14px),
+      linear-gradient(160deg, #DDE3EA 0%, #EDF0F4 100%);
+  }
+  .card-media-track{
+    display:flex;
+    height:100%;
+    transition:transform .45s cubic-bezier(.4,0,.2,1);
+  }
+  .card-slide{
+    flex:0 0 100%;
+    height:100%;
+  }
+  .card-slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    cursor:zoom-in;
+  }
+  .card-media-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.55);
+    background:rgba(18,23,31,0.42);
+    backdrop-filter:blur(2px);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    opacity:0;
+    transition:opacity .18s ease, background .18s ease, transform .15s ease;
+    z-index:2;
+    padding:0;
+  }
+  .card-media-arrow svg{ width:14px; height:14px; }
+  .card-media:hover .card-media-arrow,
+  .card-media:focus-within .card-media-arrow{ opacity:1; }
+  .card-media-arrow:hover{ background:rgba(18,23,31,0.72); }
+  .card-media-arrow:active{ transform:translateY(-50%) scale(0.9); }
+  .card-media-arrow.prev{ left:8px; }
+  .card-media-arrow.next{ right:8px; }
+  .card-media-dots{
+    position:absolute;
+    bottom:9px;
+    left:0;
+    right:0;
+    display:flex;
+    justify-content:center;
+    gap:5px;
+    z-index:2;
+  }
+  .card-media-dots button{
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    border:none;
+    padding:0;
+    background:rgba(255,255,255,0.55);
+    box-shadow:0 0 0 1px rgba(18,23,31,0.12);
+    cursor:pointer;
+    transition:background .2s ease, width .2s ease, border-radius .2s ease;
+  }
+  .card-media-dots button.active{
+    background:var(--amber);
+    width:14px;
+    border-radius:3px;
+  }
+  .card-media.single .card-media-arrow,
+  .card-media.single .card-media-dots{ display:none; }
+
+  .card-body{
+    padding:22px 24px 24px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    flex:1;
+  }
+  .card-title{
+    font-family:var(--ff-display);
+    font-size:19px;
+    font-weight:600;
+    margin:0;
+    line-height:1.25;
+  }
+  .stack-tags{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+  }
+  .stack-tags span{
+    font-family:var(--ff-mono);
+    font-size:11px;
+    padding:4px 9px;
+    border-radius:999px;
+    background:var(--paper-alt);
+    color:var(--ink-soft);
+  }
+  .card-points{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+  .card-points li b{
+    font-family:var(--ff-mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color:var(--signal-dark);
+    display:block;
+    margin-bottom:1px;
+  }
+  .card-git{
+    margin-top:6px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--ff-mono);
+    font-size:12.5px;
+    text-decoration:none;
+    color:var(--ink);
+    border-bottom:1px solid var(--ink);
+    width:fit-content;
+    padding-bottom:2px;
+    transition:color .18s ease, border-color .18s ease;
+  }
+  .card-git:hover{color:var(--signal-dark); border-color:var(--signal-dark);}
+
+  .card.placeholder{
+    opacity:0.6;
+    border-style:dashed;
+  }
+
+  /* nav dots (axis ticks) */
+  .carousel-nav{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    margin-top:2px;
+  }
+  .carousel-arrow{
+    width:38px;height:38px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--paper-raised);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    color:var(--ink);
+    transition:border-color .18s ease, color .18s ease, transform .15s ease;
+  }
+  .carousel-arrow:hover{border-color:var(--signal); color:var(--signal-dark);}
+  .carousel-arrow:active{transform:scale(0.93);}
+  .ticks{
+    display:flex;
+    gap:8px;
+  }
+  .ticks button{
+    width:22px;
+    height:3px;
+    border:none;
+    border-radius:2px;
+    background:var(--line);
+    cursor:pointer;
+    padding:0;
+    transition:background .2s ease, width .2s ease;
+  }
+  .ticks button.active{background:var(--amber); width:34px;}
+
+  /* ============ PARCOURS / TIMELINE ============ */
+  .timeline-section{
+    position:relative;
+    z-index:1;
+    max-width:1180px;
+    margin:64px auto 0;
+    padding:0 32px;
+  }
+
+  .timeline{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    gap:26px;
+  }
+  .timeline::before{
+    content:'';
+    position:absolute;
+    left:19px;
+    top:6px;
+    bottom:6px;
+    width:2px;
+    background:var(--line);
+    z-index:0;
+  }
+
+  .tl-item{
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:40px 1fr;
+    gap:18px;
+    align-items:start;
+  }
+
+  .tl-axis{
+    display:flex;
+    justify-content:center;
+    padding-top:2px;
+  }
+  .tl-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--paper-raised);
+    border:1.5px solid var(--line);
+    flex-shrink:0;
+  }
+  .tl-icon svg{width:18px;height:18px;}
+  .tl-item[data-type="formation"] .tl-icon{ color:var(--amber); border-color:rgba(242,169,59,0.45); }
+  .tl-item[data-type="experience"] .tl-icon{ color:var(--signal-dark); border-color:rgba(47,85,232,0.3); }
+
+  .tl-content{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:var(--radius-md);
+    box-shadow:var(--shadow-card);
+    overflow:hidden;
+    transition:box-shadow .25s ease;
+  }
+  .tl-content:hover{ box-shadow:var(--shadow-card-hover); }
+
+  .tl-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    padding:18px 22px;
+    cursor:pointer;
+  }
+  .tl-header-text{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    min-width:0;
+  }
+  .tl-meta{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .tl-kind{
+    font-family:var(--ff-mono);
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    padding:3px 9px;
+    border-radius:999px;
+  }
+  .tl-item[data-type="formation"] .tl-kind{ background:rgba(242,169,59,0.16); color:#8A6316; }
+  .tl-item[data-type="experience"] .tl-kind{ background:rgba(47,85,232,0.12); color:var(--signal-dark); }
+  .tl-date{
+    font-size:11.5px;
+    color:var(--muted);
+  }
+  .tl-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--ff-mono);
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--muted);
+  }
+  .tl-title{
+    font-family:var(--ff-display);
+    font-size:17px;
+    font-weight:600;
+    margin:0;
+    line-height:1.3;
+  }
+  .tl-title .tl-sub{
+    font-family:var(--ff-body);
+    font-weight:400;
+    font-size:14px;
+    color:var(--ink-soft);
+  }
+  .tl-org{
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .tl-chevron{
+    flex-shrink:0;
+    width:20px;height:20px;
+    color:var(--muted);
+    transition:transform .25s ease;
+  }
+  .tl-item.open .tl-chevron{ transform:rotate(180deg); }
+
+  .tl-panel{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .tl-panel-inner{
+    padding:15px 22px 22px;
+    border-top:1px solid var(--line);
+  }
+  .tl-points{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+  .tl-points li{
+    position:relative;
+    padding-left:16px;
+  }
+  .tl-points li::before{
+    content:'';
+    position:absolute;
+    left:0;
+    top:7px;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:var(--line);
+  }
+  .tl-item[data-type="formation"] .tl-points li::before{ background:var(--amber); }
+  .tl-item[data-type="experience"] .tl-points li::before{ background:var(--signal); }
+
+  /* ============ CTA FOOTER ============ */
+  .cta-footer{
+    position:relative;
+    z-index:1;
+    max-width:1180px;
+    margin:76px auto 60px;
+    padding:0 32px;
+  }
+  .cta-band{
+    background:var(--ink);
+    border-radius:var(--radius-lg);
+    padding:48px 48px 44px;
+    color:#fff;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size:32px 32px;
+  }
+  .cta-band .cta-eyebrow{
+    font-family:var(--ff-mono);
+    font-size:12px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:#9DA9BC;
+    margin:0 0 10px;
+  }
+  .cta-band h2{
+    font-family:var(--ff-display);
+    font-size:clamp(24px,3vw,32px);
+    font-weight:600;
+    margin:0 0 34px;
+    max-width:26ch;
+  }
+  .cta-grid{
+    display:grid;
+    grid-template-columns:1.1fr 1fr 1fr;
+    gap:16px;
+  }
+  .cta-btn{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    text-decoration:none;
+    color:#fff;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:var(--radius-md);
+    padding:20px 22px;
+    transition:background .2s ease, border-color .2s ease, transform .15s ease;
+  }
+  .cta-btn:hover{background:rgba(255,255,255,0.09); border-color:rgba(255,255,255,0.3); transform:translateY(-2px);}
+  .cta-btn.primary{
+    background:var(--signal);
+    border-color:var(--signal);
+  }
+  .cta-btn.primary:hover{background:var(--signal-dark); border-color:var(--signal-dark);}
+  .cta-btn .label{
+    font-family:var(--ff-display);
+    font-size:16px;
+    font-weight:600;
+  }
+  .cta-btn .sub{
+    font-family:var(--ff-mono);
+    font-size:11.5px;
+    color:rgba(255,255,255,0.62);
+  }
+  .cta-btn.primary .sub{color:rgba(255,255,255,0.78);}
+
+  footer.sitefoot{
+    text-align:center;
+    font-family:var(--ff-mono);
+    font-size:11.5px;
+    color:var(--muted);
+    padding:0 32px 40px;
+  }
+
+  /* ============ LIGHTBOX (zoom image) ============ */
+  .lightbox{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:64px;
+    background:rgba(18,23,31,0.92);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity .25s ease, visibility .25s ease;
+  }
+  .lightbox.open{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+  }
+  .lightbox-figure{
+    position:relative;
+    max-width:min(1100px, 90vw);
+    max-height:86vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+  }
+  .lightbox-img{
+    max-width:100%;
+    max-height:80vh;
+    width:auto;
+    height:auto;
+    display:block;
+    border-radius:var(--radius-md);
+    background:var(--paper-raised);
+    box-shadow:0 30px 80px -20px rgba(0,0,0,0.55);
+    transform:scale(0.96);
+    transition:transform .25s ease;
+  }
+  .lightbox.open .lightbox-img{ transform:scale(1); }
+  .lightbox-caption{
+    font-size:12px;
+    letter-spacing:0.03em;
+    color:rgba(255,255,255,0.68);
+    text-align:center;
+  }
+  .lightbox-close{
+    position:absolute;
+    top:22px;
+    right:22px;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.25);
+    background:rgba(255,255,255,0.06);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:background .18s ease, transform .15s ease;
+    z-index:2;
+  }
+  .lightbox-close svg{ width:18px; height:18px; }
+  .lightbox-close:hover{ background:rgba(255,255,255,0.16); }
+  .lightbox-close:active{ transform:scale(0.92); }
+  .lightbox-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.25);
+    background:rgba(255,255,255,0.06);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:background .18s ease, transform .15s ease;
+    z-index:2;
+  }
+  .lightbox-arrow svg{ width:20px; height:20px; }
+  .lightbox-arrow:hover{ background:rgba(255,255,255,0.16); }
+  .lightbox-arrow:active{ transform:translateY(-50%) scale(0.92); }
+  .lightbox-arrow.prev{ left:18px; }
+  .lightbox-arrow.next{ right:18px; }
+  .lightbox.single-image .lightbox-arrow{ display:none; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:860px){
+    .hero-inner{grid-template-columns:1fr; padding:38px 28px; gap:32px;}
+    .hero-photo{order:-1;}
+    .orbit{width:150px;height:150px;}
+    .photo-circle{width:112px;height:112px;}
+    .photo-circle span{font-size:30px;}
+    .filters{padding:14px 18px; border-radius:22px; margin-top:16px;}
+    .filters-label{display:none;}
+    .carousel-section{padding:0 16px;}
+    .hero{padding:34px 16px 24px;}
+    .cta-grid{grid-template-columns:1fr;}
+    .cta-band{padding:34px 26px;}
+    .hover-zone{display:none;}
+    .timeline-section{padding:0 16px;}
+    .tl-item{grid-template-columns:32px 1fr; gap:12px;}
+    .tl-icon{width:32px;height:32px;}
+    .tl-icon svg{width:15px;height:15px;}
+    .timeline::before{left:15px;}
+    .tl-header{padding:14px 16px;}
+    .tl-panel-inner{padding:12px 16px 18px;}
+    .tl-title{font-size:15.5px;}
+    .lightbox{padding:24px;}
+    .lightbox-close{top:12px; right:12px; width:36px; height:36px;}
+    .lightbox-arrow{width:38px; height:38px;}
+    .lightbox-arrow.prev{left:6px;}
+    .lightbox-arrow.next{right:6px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-texture" aria-hidden="true"></div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow"><span class="dot"></span>Data Analyst — Disponible pour de nouvelles missions</p>
+      <h1>Bonjour, je suis<br><span>Kilian Pauchet</span></h1>
+      <p class="tagline">Je transforme des données brutes en décisions concrètes : de la collecte à la visualisation, en passant par la modélisation. Python, SQL, Power BI et Excel au service du besoin métier.</p>
+      <div class="hero-stats">
+        <div><span class="num">08</span><span class="label">projets data</span></div>
+      </div>
+      <a href="#projets" class="scroll-cue">Voir mes projets ↓</a>
+    </div>
+    <div class="hero-photo">
+      <div class="orbit">
+        <svg viewBox="0 0 220 220" aria-hidden="true">
+          <circle cx="110" cy="110" r="104" fill="none" stroke="#C7CFD9" stroke-width="1" stroke-dasharray="1 9" stroke-linecap="round"/>
+          <circle cx="110" cy="6" r="3" fill="#F2A93B"/>
+        </svg>
+        <div class="photo-circle">
+          <img src="./img/photo.jpg" alt="Kilian Pauchet" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ FILTRES ============ -->
+<nav class="filters" id="filters" aria-label="Filtrer les projets par compétence">
+  <span class="filters-label mono">Filtrer par compétence /</span>
+  <button class="filter-btn" data-filter="powerbi" aria-pressed="false">Power BI</button>
+  <button class="filter-btn" data-filter="excel" aria-pressed="false">Excel</button>
+  <button class="filter-btn" data-filter="sql" aria-pressed="false">SQL</button>
+  <button class="filter-btn" data-filter="python" aria-pressed="false">Python</button>
+</nav>
+
+<!-- ============ CAROUSEL PROJETS ============ -->
+<section class="carousel-section" id="projets">
+  <div class="section-heading">
+    <h2>Projets</h2>
+
+  </div>
+
+  <div class="carousel-wrap">
+    <div class="hover-zone left" data-dir="-1" aria-hidden="true"></div>
+    <div class="hover-zone right" data-dir="1" aria-hidden="true"></div>
+
+    <div class="carousel-track" id="track">
+
+      <article class="card" data-stack="python">
+        <div class="card-media">
+          <div class="card-media-track">
+            <div class="card-slide"><img src="./img/Python/1.png" alt="Aperçu 1 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/Python/2.png" alt="Aperçu 2 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/Python/3.png" alt="Aperçu 3 du projet" loading="lazy"></div>
+          </div>
+          <button class="card-media-arrow prev" type="button" aria-label="Image précédente">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="card-media-arrow next" type="button" aria-label="Image suivante">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <div class="card-media-dots"></div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Étude de marché internationale — La Poule qui Chante</h3>
+          <div class="stack-tags"><span>Python</span><span>ACP</span><span>Clustering</span></div>
+          <ul class="card-points">
+            <li><b>Présentation</b>Identifier les pays les plus prometteurs pour l'expansion internationale d'une entreprise agroalimentaire fictive.</li>
+            <li><b>Besoin métier</b>Analyser plus de 170 pays sur des critères macroéconomiques, logistiques et alimentaires pour prioriser les marchés cibles.</li>
+            <li><b>Solution mise en place</b>Nettoyage des données, ACP puis clustering K-Means (K=4) pour dégager des profils de pays homogènes.</li>
+            <li><b>Résultats obtenus</b>4 profils de marché identifiés avec recommandations différenciées (priorité marge, priorité volume, approche sur-mesure).</li>
+          </ul>
+          <!--  <a class="card-git" href="#" target="_blank" rel="noopener">Voir le code sur GitHub →</a>-->
+        </div>
+      </article>
+      <article class="card" data-stack="excel">
+        <div class="card-media">
+          <div class="card-media-track">
+            <div class="card-slide"><img src="./img/Excel/1.png" alt="Aperçu 1 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/Excel/2.png" alt="Aperçu 2 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/Excel/3.png" alt="Aperçu 3 du projet" loading="lazy"></div>
+          </div>
+          <button class="card-media-arrow prev" type="button" aria-label="Image précédente">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="card-media-arrow next" type="button" aria-label="Image suivante">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <div class="card-media-dots"></div>
+        </div>
+              <div class="card-body">
+                <h3 class="card-title">Analyse de ventes pour un e-commerce </h3>
+                <div class="stack-tags"><span>Excel</span><span>TCD</span><span>Fonction avancé</span></div>
+                <ul class="card-points">
+                  <li><b>Présentation</b>Développement d’un dashboard sur excel pour une entreprise de grande distribution qui à effectuer un virage stratégique dans les catégories de produits de ventes</li>
+                  <li><b>Besoin métier</b>Comprendre la baisse de CA et identifié les points à améliorer</li>
+                  <li><b>Solution mise en place</b>analyse du trafic du site internet et de la conversion, du temps passé sur le site et du panier moyen</li>
+                  <li><b>Résultats obtenus</b>La baisse de CA a été identifier, l’expérience utilisateur n’étant pas optimale, le parcours d’achat était inconsistant. Recommandation d’amélioration de l’interface utilisateur du site afin d’améliorer le taux de conversion et d’engager les clients plus longtemps sur le site.</li>
+                </ul>
+                <!--  <a class="card-git" href="#" target="_blank" rel="noopener">Voir le code sur GitHub →</a>-->
+              </div>
+      </article>
+
+      <article class="card" data-stack="sql">
+        <div class="card-media">
+          <div class="card-media-track">
+            <div class="card-slide"><img src="./img/SQL/1.png" alt="Aperçu 1 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/SQL/2.png" alt="Aperçu 2 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/SQL/3.png" alt="Aperçu 3 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/SQL/4.png" alt="Aperçu 4 du projet" loading="lazy"></div>
+          </div>
+          <button class="card-media-arrow prev" type="button" aria-label="Image précédente">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="card-media-arrow next" type="button" aria-label="Image suivante">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <div class="card-media-dots"></div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Analyse des ventes de biens immobiliers </h3>
+          <div class="stack-tags"><span>SQL</span><span>MySql BenchWork</span></div>
+          <ul class="card-points">
+            <li><b>Présentation</b>LaPlace Immo, réseau nationalo d'agences immobilères souhaite se démarquer de la concurence en créant un modéle afin de mieux prévoir les prix de ventes des biens immobiliers. l'objectif est donc de créer une base de données fiable sur les ventes immobilèresen france sur le premiers ssemestre 2020.</li>
+            <li><b>Besoin métier</b>Identifer les zones géographiques où le marché immobiliers est le plus actifs, ainsi qu'identifier le type de bien qui se vendent le mieux.</li>
+            <li><b>Solution mise en place</b>Création d'une base de données respectant les 3 formes normal, manipulation de la base de données afin d'identifier les secteurs où le marché immobiliers est sous tension.</li>
+          </ul>
+          <!--  <a class="card-git" href="#" target="_blank" rel="noopener">Voir le code sur GitHub →</a>-->
+        </div>
+      </article>	
+<article class="card" data-stack="python">
+        <div class="card-media">
+          <div class="card-media-track">
+            <div class="card-slide"><img src="./img/Python/4.png" alt="Aperçu 1 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/Python/5.png" alt="Aperçu 2 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/Python/6.png" alt="Aperçu 3 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/Python/7.png" alt="Aperçu 4 du projet" loading="lazy"></div>
+          </div>
+          <button class="card-media-arrow prev" type="button" aria-label="Image précédente">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="card-media-arrow next" type="button" aria-label="Image suivante">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <div class="card-media-dots"></div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Analyse des ventes d’une librairie </h3>
+          <div class="stack-tags"><span>Python</span><span>numpy</span><span>Panda</span><span>matplotlib</span><span>Seaborn</span></div>
+          <ul class="card-points">
+            <li><b>Présentation</b>L’entreprise Lapage était originellement une librairie physique avec plusieurs points de vente. Mais devant le succès de certains de ses produits et l’engouement de ses clients, elle a décidé depuis 2 ans d’ouvrir un site de vente en ligne.</li>
+            <li><b>Besoin métier</b>La structure a besoin d’aide pour mieux comprendre ses données afin defaire le point sur l’activité.</li>
+            <li><b>Solution mise en place</b>Mis en place d'un notebook pour explorer les ventes et les habitudes des clients, identification des différents profils clients, identification des gros clients business.</li>
+            <li><b>Résultats obtenus</b>Recommandation création d'un pôle "Compte Entreprise" offrant des services dédié au clients business(livraison prioritaire, remise sur volume) afin de les fidélisé, Créer une alerte différencier pour les catégories selon l'activité des clients Business.Cibler les 18-25 ans, segment le plus rentable via une campagne marketing sur les réseaux sociaux.</li>
+          </ul>
+          <!--  <a class="card-git" href="#" target="_blank" rel="noopener">Voir le code sur GitHub →</a>-->
+        </div>
+      </article>
+<article class="card" data-stack="powerbi">
+        <div class="card-media">
+          <div class="card-media-track">
+            <div class="card-slide"><img src="./img/PowerBi/1.png" alt="Aperçu 1 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/PowerBi/2.png" alt="Aperçu 2 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/PowerBi/3.png" alt="Aperçu 3 du projet" loading="lazy"></div>
+          </div>
+          <button class="card-media-arrow prev" type="button" aria-label="Image précédente">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="card-media-arrow next" type="button" aria-label="Image suivante">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <div class="card-media-dots"></div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Dashboard pour le Plan industriel et commercial d’un grand groupe industriel </h3>
+          <div class="stack-tags"><span>PowerQuery</span><span>PowerBi</span><span>DAX</span></div>
+          <ul class="card-points">
+            <li><b>Présentation</b>Développement d’un dashboard sur PowerBi pour un grand groupe industriel qui souhaite avoir un visuel clair sur différents indicateur clé</li>
+            <li><b>Besoin métier</b>Comprendre l’évolution du CA par rapport au budget des clients durant l’exercice en cours et à venir, notamment grâce à un système d’historique et comparaison entre le mois en cours et l’historique selon le site industriel choisis </li>
+            <li><b>Solution mise en place</b>Dashboard mis en place avec suivis mensuel du Ca et du budget par site industriel, ajout d’une fonctionnalité pour simuler une augmentation ou une baisse d’activité et l’impact sur le CA du site. Suivis du CA généré par site et par client avec la possibilité de filtré par catégorie de CA généré, analyse du CA généré par la sous-traitance interne par site.</li>
+          </ul>
+          <!--  <a class="card-git" href="#" target="_blank" rel="noopener">Voir le code sur GitHub →</a>-->
+        </div>
+      </article>
+<article class="card" data-stack="powerbi">
+        <div class="card-media">
+          <div class="card-media-track">
+            <div class="card-slide"><img src="./img/PowerBi/4.png" alt="Aperçu 1 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/PowerBi/5.png" alt="Aperçu 2 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/PowerBi/6.png" alt="Aperçu 3 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/PowerBi/7.png" alt="Aperçu 4 du projet" loading="lazy"></div>
+          </div>
+          <button class="card-media-arrow prev" type="button" aria-label="Image précédente">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="card-media-arrow next" type="button" aria-label="Image suivante">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <div class="card-media-dots"></div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Étude sur l’eau potable à l’échelle mondiale </h3>
+          <div class="stack-tags"><span>PowerQuery</span><span>PowerBi</span><span>DAX</span></div>
+          <ul class="card-points">
+            <li><b>Présentation</b>L’ONG DWFA a pour objectif l’accès à l’eau potable pour l’ensemble de la population mondiale. Elle a effectué une demande de financement auprès d’un bailleur de fonds en présentant ces 3 domaines d’expertise (création de services d’accès à l’eau, la modernisation des services d’accès à l’eau, consulting auprès d’administration et gouvernements à propos des politiques d’accès à l’eau. </li>
+            <li><b>Besoin métier</b>Identifier les pays qui ont le plus besoin d’un des domaines d’expertise afin d’utiliser au mieux les ressources de l’ONG. </li>
+            <li><b>Solution mise en place</b>Analyse selon différent critère (%urbanisation, % accès à l’eau potable, etc ...) </li>
+          </ul>
+          <!--  <a class="card-git" href="#" target="_blank" rel="noopener">Voir le code sur GitHub →</a>-->
+        </div>
+      </article>
+<article class="card" data-stack="powerbi">
+        <div class="card-media">
+          <div class="card-media-track">
+            <div class="card-slide"><img src="./img/PowerBi/8.png" alt="Aperçu 1 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/PowerBi/9.png" alt="Aperçu 2 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/PowerBi/10.png" alt="Aperçu 3 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/PowerBi/11.png" alt="Aperçu 4 du projet" loading="lazy"></div>
+          </div>
+          <button class="card-media-arrow prev" type="button" aria-label="Image précédente">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="card-media-arrow next" type="button" aria-label="Image suivante">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <div class="card-media-dots"></div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Création d’un Dashboard pour visualiser l’avancement de projets </h3>
+          <div class="stack-tags"><span>PowerQuery</span><span>PowerBi</span><span>DAX</span></div>
+          <ul class="card-points">
+            <li><b>Présentation</b>L’entreprise sanitoral est une société qui fabrique et commercialise des soins bucco-dentaires  </li>
+            <li><b>Besoin métier</b> l’entreprise a besoin d’un outil de visualisation pour l’avancement de ses projets, notamment pour pouvoir suivre l’avancement des projets en coût et en durée de livraison, identifier les retards et contrôler les performances selon le rôle de l’utilisateur</li>
+            <li><b>Solution mise en place</b>Création de différents rôle correspondant au différents directeur pays et région avec restriction selon le rôle, listing des projets par pays selon leur avancement, cout, nombre de livrables et détection des projets ayant plus de 15% de retard selon les pays. </li>
+            <li><b>Résultats obtenus</b>La baisse de CA a été identifier, l’expérience utilisateur n’étant pas optimale, le parcours d’achat était inconsistant. Recommandation d’amélioration de l’interface utilisateur du site afin d’améliorer le taux de conversion et d’engager les clients plus longtemps sur le site. </li>
+          </ul>
+          <!--  <a class="card-git" href="#" target="_blank" rel="noopener">Voir le code sur GitHub →</a>-->
+        </div>
+      </article>
+
+      <article class="card" data-stack="python">
+        <div class="card-media">
+          <div class="card-media-track">
+            <div class="card-slide"><img src="./img/Python/8.png" alt="Aperçu 1 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/Python/9.png" alt="Aperçu 2 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/Python/10.png" alt="Aperçu 3 du projet" loading="lazy"></div>
+            <div class="card-slide"><img src="./img/Python/11.png" alt="Aperçu 3 du projet" loading="lazy"></div>
+          </div>
+          <button class="card-media-arrow prev" type="button" aria-label="Image précédente">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="card-media-arrow next" type="button" aria-label="Image suivante">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <div class="card-media-dots"></div>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Détection de faux billets — ONCFM</h3>
+          <div class="stack-tags"><span>Python</span><span>Machine Learning</span></div>
+          <ul class="card-points">
+            <li><b>Présentation</b>Développement d'une application de machine learning capable de prédire si un billet est vrai ou faux.</li>
+            <li><b>Besoin métier</b>Fiabiliser le contrôle de 1 500 billets à partir de 6 caractéristiques géométriques.</li>
+            <li><b>Solution mise en place</b>Comparaison de 4 algorithmes — K-Means, régression logistique, KNN, Random Forest — pour retenir le plus performant.</li>
+            <li><b>Résultats obtenus</b>Modèle final sélectionné et intégré dans une application fonctionnelle livrée en production.</li>
+          </ul>
+        <!--  <a class="card-git" href="#" target="_blank" rel="noopener">Voir le code sur GitHub →</a>-->
+        </div>
+      </article>
+
+
+    </div>
+  </div>
+
+  <div class="carousel-nav">
+    <button class="carousel-arrow" id="prevBtn" aria-label="Projet précédent">←</button>
+    <div class="ticks" id="ticks" role="tablist" aria-label="Aller à un projet"></div>
+    <button class="carousel-arrow" id="nextBtn" aria-label="Projet suivant">→</button>
+  </div>
+</section>
+
+<!-- ============ PARCOURS ============ -->
+<section class="timeline-section" id="parcours">
+  <div class="section-heading">
+    <h2>Parcours</h2>
+    <span class="hint mono">Cliquez sur une étape pour dérouler le détail</span>
+  </div>
+
+  <div class="timeline" id="timeline">
+
+    <!-- 1. Formation — BTS SIO -->
+    <div class="tl-item" data-type="formation">
+      <div class="tl-axis">
+        <span class="tl-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9.5 12 4l10 5.5-10 5.5L2 9.5Z"/><path d="M6.5 11.8v4.2c0 1.6 2.46 3 5.5 3s5.5-1.4 5.5-3v-4.2"/><path d="M22 9.5v6"/></svg>
+        </span>
+      </div>
+      <div class="tl-content">
+        <div class="tl-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="tl-header-text">
+            <div class="tl-meta">
+              <span class="tl-kind">Formation</span>
+              <span class="tl-date mono">20XX — 20XX</span>
+            </div>
+            <h3 class="tl-title">BTS SIO <span class="tl-sub">— Services Informatiques aux Organisations</span></h3>
+            <span class="tl-org">Lycée Édouard Gand - Amiens </span>
+          </div>
+          <span class="tl-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+        </div>
+        <div class="tl-panel">
+          <div class="tl-panel-inner">
+            <ul class="tl-points">
+              <li>Fondamentaux des systèmes d'information : réseaux, bases de données, support aux utilisateurs</li>
+              <li>Premières bases de développement et de gestion de projet informatique</li>
+              <li>Apprentissage de la programation web (HTML / PHP / SQL), modéle mvc etc...</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- 3. Formation — Licence Pro I2M -->
+    <div class="tl-item" data-type="formation">
+      <div class="tl-axis">
+        <span class="tl-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9.5 12 4l10 5.5-10 5.5L2 9.5Z"/><path d="M6.5 11.8v4.2c0 1.6 2.46 3 5.5 3s5.5-1.4 5.5-3v-4.2"/><path d="M22 9.5v6"/></svg>
+        </span>
+      </div>
+      <div class="tl-content">
+        <div class="tl-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="tl-header-text">
+            <div class="tl-meta">
+              <span class="tl-kind">Formation</span>
+              <span class="tl-date mono">2014 — 2015</span>
+            </div>
+            <h3 class="tl-title">Licence Professionnelle I2M</h3>
+            <span class="tl-org">IUT de Lorraine — Saint-dié-des-Vosges</span>
+          </div>
+          <span class="tl-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+        </div>
+        <div class="tl-panel">
+          <div class="tl-panel-inner">
+            <ul class="tl-points">
+              <li>Licence professionnel orienté développement web et application mobiles</li>
+              <li>Apprentissage de language orienté objet a destination du développement d'application mobiles ( Java pour Androïd et Swift pour Iphone)</li>
+              <li>Appronfondissement des connaissances web</li>
+              <li>Création d'une application de quizz géolocalisé sur un casque de ski équipé d'un écran de réalité augmenté</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+     <div class="tl-item" data-type="experience">
+      <div class="tl-axis">
+        <span class="tl-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7.8" width="19" height="11.7" rx="2.2"/><path d="M8.3 7.8V6.2a2 2 0 0 1 2-2h3.4a2 2 0 0 1 2 2v1.6"/><path d="M2.5 12.8h19"/></svg>
+        </span>
+      </div>
+      <div class="tl-content">
+        <div class="tl-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="tl-header-text">
+            <div class="tl-meta">
+              <span class="tl-kind">Expérience Professionnelle</span>
+              <span class="tl-date mono">18 Novembre 2016 - 31 Décembre 2020</span>
+            </div>
+            <h3 class="tl-title">Équipier polyvalent</h3>
+            <span class="tl-org">McDonald's - Friville-Escarbotin</span>
+          </div>
+          <span class="tl-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+        </div>
+        <div class="tl-panel">
+          <div class="tl-panel-inner">
+            <ul class="tl-points">
+              <li>Assemblage de produits destiné à la consomation</li>
+              <li>Suivis des normes et procéduires de propreté et d'hygiéne alimentaire</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 2. Expérience — management opérationnel -->
+    <div class="tl-item" data-type="experience">
+      <div class="tl-axis">
+        <span class="tl-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7.8" width="19" height="11.7" rx="2.2"/><path d="M8.3 7.8V6.2a2 2 0 0 1 2-2h3.4a2 2 0 0 1 2 2v1.6"/><path d="M2.5 12.8h19"/></svg>
+        </span>
+      </div>
+      <div class="tl-content">
+        <div class="tl-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="tl-header-text">
+            <div class="tl-meta">
+              <span class="tl-kind">Expérience Professionnelle</span>
+              <span class="tl-date mono">01 Janvier 2021 - 23 Juillet 2025</span>
+            </div>
+            <h3 class="tl-title">Management opérationnel</h3>
+            <span class="tl-org">McDonald's - Friville-Escarbotin</span>
+          </div>
+          <span class="tl-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+        </div>
+        <div class="tl-panel">
+          <div class="tl-panel-inner">
+            <ul class="tl-points">
+              <li>Pilotage d'équipes et organisation de la production au quotidien</li>
+              <li>Suivi d'indicateurs de performance et reporting terrain</li>
+              <li>Amélioration continue des processus — détails à compléter avec vos missions précises</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+
+    
+
+    <!-- 4. Formation — Data Analyst OpenClassrooms -->
+    <div class="tl-item" data-type="formation">
+      <div class="tl-axis">
+        <span class="tl-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9.5 12 4l10 5.5-10 5.5L2 9.5Z"/><path d="M6.5 11.8v4.2c0 1.6 2.46 3 5.5 3s5.5-1.4 5.5-3v-4.2"/><path d="M22 9.5v6"/></svg>
+        </span>
+      </div>
+      <div class="tl-content">
+        <div class="tl-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="tl-header-text">
+            <div class="tl-meta">
+              <span class="tl-kind">Formation</span>
+              <span class="tl-date mono"> Septembre 2025 — Septembre 2026</span>
+            </div>
+            <h3 class="tl-title">Data Analyst <span class="tl-sub">— OpenClassrooms</span></h3>
+            <span class="tl-org">Formation diplômante à distance(Rncp)</span>
+          </div>
+          <span class="tl-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+        </div>
+        <div class="tl-panel">
+          <div class="tl-panel-inner">
+            <ul class="tl-points">
+              <li>Apprentissage en autonomie de language et process d'analyse de données. Apprentissage des fonction avancé d'Excel(TCD / index-equiv / rechercheX )</li>
+              <li>Apprentissage de SQL pour la manipulation des bases de données sur MySQLServeur BenchWork</li>
+              <li>Apprentissage de Python et de différentes librairies afin de manipuler des données (Panda / Numpy), pour afficher graphiquement les données(Seaborn / matplotlib)</li>
+              <li>Apprentissage d'un outil de visualisation Power BI (passage Certification ?)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Expérience — stage actuel -->
+    <div class="tl-item open" data-type="experience">
+      <div class="tl-axis">
+        <span class="tl-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7.8" width="19" height="11.7" rx="2.2"/><path d="M8.3 7.8V6.2a2 2 0 0 1 2-2h3.4a2 2 0 0 1 2 2v1.6"/><path d="M2.5 12.8h19"/></svg>
+        </span>
+      </div>
+      <div class="tl-content">
+        <div class="tl-header" role="button" tabindex="0" aria-expanded="true">
+          <div class="tl-header-text">
+            <div class="tl-meta">
+              <span class="tl-kind">Expérience Professionnelle</span>
+              <span class="tl-date mono">27 avril 2026 - 24 Juillet 2026</span>
+              <span class="tl-org">Selha Group - Eu</span>
+            </div>
+            <h3 class="tl-title">Analyste de données &amp; Reporting <span class="tl-sub"> Stage</span></h3>
+            <span class="tl-org">Entreprise multi-site de fabrication de cartes électroniques</span>
+          </div>
+          <span class="tl-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+        </div>
+        <div class="tl-panel">
+          <div class="tl-panel-inner">
+            <ul class="tl-points">
+              <li>Migration des outils de reporting PIC (Plan Industriel et Commercial) d'Excel vers Power BI</li>
+              <li>Conception d'un modèle en étoile (3 tables de faits, 5 dimensions) et écriture de mesures DAX avancées (CALCULATE, TREATAS, ISINSCOPE, comparaisons multi-snapshots)</li>
+              <li>Fiabilisation des flux Power Query (M) : dédoublonnage, jointures exactes, normalisation des formats de date hétérogènes</li>
+              <li>Rédaction de la documentation technique complète du projet</li>
+              <li>Résolution de probléme de format/saisie de données sur des fichier annexe à la mission.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ CTA FOOTER ============ -->
+<section class="cta-footer">
+  <div class="cta-band">
+    <p class="cta-eyebrow">Prochaine étape</p>
+    <h2>Une opportunité à discuter ? Retrouvons-nous.</h2>
+    <div class="cta-grid">
+
+      <a class="cta-btn primary" href="mailto:votre.email@example.com?subject=Opportunité%20-%20Data%20Analyst">
+        <span class="label">Contactez-moi ↗</span>
+        <span class="sub">kilian.80520@gmail.com</span>
+      </a>
+
+      <a class="cta-btn" href="https://github.com/KilianPauchet" target="_blank" rel="noopener">
+        <span class="label">Mon repository Git ↗</span>
+        <span class="sub">github.com/votre-utilisateur</span>
+      </a>
+
+      <a class="cta-btn" href="cv.pdf" download>
+        <span class="label">Télécharger mon CV ↓</span>
+        <span class="sub">PDF · mis à jour 08/2026</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="sitefoot">© 2026 Kilian Pauchet— Portfolio Data Analyst</footer>
+
+<!-- ============ LIGHTBOX (zoom image) ============ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Aperçu agrandi de l'image">
+  <button class="lightbox-close" type="button" aria-label="Fermer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <button class="lightbox-arrow prev" type="button" aria-label="Image précédente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+  </button>
+  <button class="lightbox-arrow next" type="button" aria-label="Image suivante">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+  <figure class="lightbox-figure">
+    <img class="lightbox-img" src="" alt="">
+    <figcaption class="lightbox-caption mono"></figcaption>
+  </figure>
+</div>
+
+<script>
+(function(){
+  const track = document.getElementById('track');
+  const cards = Array.from(track.querySelectorAll('.card'));
+  const ticksWrap = document.getElementById('ticks');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const filterBtns = Array.from(document.querySelectorAll('.filter-btn'));
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Ticks (index / navigation) ---------- */
+  function buildTicks(){
+    ticksWrap.innerHTML = '';
+    visibleCards().forEach((card, i) => {
+      const b = document.createElement('button');
+      b.setAttribute('aria-label', 'Aller au projet ' + (i+1));
+      b.addEventListener('click', () => scrollToCard(card));
+      ticksWrap.appendChild(b);
+    });
+  }
+  function visibleCards(){
+    return cards.filter(c => c.style.display !== 'none');
+  }
+  function scrollToCard(card){
+    const wrap = track;
+    const target = card.offsetLeft - (wrap.clientWidth - card.clientWidth) / 2;
+    wrap.scrollTo({ left: target, behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+
+  /* ---------- Scale / focus effect + active tick ---------- */
+  function updateFocus(){
+    const trackRect = track.getBoundingClientRect();
+    const center = trackRect.left + trackRect.width / 2;
+    let closest = null, closestDist = Infinity;
+
+    visibleCards().forEach(card => {
+      const r = card.getBoundingClientRect();
+      const cardCenter = r.left + r.width / 2;
+      const dist = Math.abs(center - cardCenter);
+      const norm = Math.min(dist / (trackRect.width / 2), 1);
+      const scale = 1 - norm * 0.14;
+      const opacity = 1 - norm * 0.45;
+      card.style.transform = 'scale(' + scale.toFixed(3) + ')';
+      card.style.opacity = Math.max(opacity, 0.55).toFixed(2);
+      if (dist < closestDist){ closestDist = dist; closest = card; }
+    });
+
+    const idx = visibleCards().indexOf(closest);
+    Array.from(ticksWrap.children).forEach((t, i) => {
+      t.classList.toggle('active', i === idx);
+    });
+  }
+
+  let rafPending = false;
+  track.addEventListener('scroll', () => {
+    if (!rafPending){
+      rafPending = true;
+      requestAnimationFrame(() => { updateFocus(); rafPending = false; });
+    }
+  });
+  window.addEventListener('resize', updateFocus);
+
+  /* ---------- Hover-zone auto-scroll ---------- */
+  let scrollDir = 0;
+  let scrollRAF = null;
+  function stepScroll(){
+    if (scrollDir !== 0){
+      track.scrollLeft += scrollDir * 6;
+      scrollRAF = requestAnimationFrame(stepScroll);
+    }
+  }
+  document.querySelectorAll('.hover-zone').forEach(zone => {
+    const dir = parseInt(zone.dataset.dir, 10);
+    zone.addEventListener('mouseenter', () => {
+      scrollDir = dir;
+      if (!scrollRAF) scrollRAF = requestAnimationFrame(stepScroll);
+    });
+    zone.addEventListener('mouseleave', () => {
+      scrollDir = 0;
+      if (scrollRAF){ cancelAnimationFrame(scrollRAF); scrollRAF = null; }
+    });
+  });
+
+  /* ---------- Prev / next buttons ---------- */
+  function neighbor(delta){
+    const vis = visibleCards();
+    const trackRect = track.getBoundingClientRect();
+    const center = trackRect.left + trackRect.width / 2;
+    let idx = 0, best = Infinity;
+    vis.forEach((c,i) => {
+      const r = c.getBoundingClientRect();
+      const d = Math.abs(center - (r.left + r.width/2));
+      if (d < best){ best = d; idx = i; }
+    });
+    const next = vis[Math.min(Math.max(idx + delta, 0), vis.length - 1)];
+    if (next) scrollToCard(next);
+  }
+  prevBtn.addEventListener('click', () => neighbor(-1));
+  nextBtn.addEventListener('click', () => neighbor(1));
+
+  /* ---------- Filters ---------- */
+  let activeFilters = new Set();
+  function applyFilters(){
+    filterBtns.forEach(b => {
+      const on = activeFilters.has(b.dataset.filter);
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    cards.forEach(card => {
+      const stacks = card.dataset.stack.split(',');
+      const show = activeFilters.size === 0 || stacks.some(s => activeFilters.has(s));
+      card.style.display = show ? '' : 'none';
+    });
+    buildTicks();
+    track.scrollTo({ left: 0, behavior: 'auto' });
+    requestAnimationFrame(updateFocus);
+  }
+  filterBtns.forEach(b => {
+    b.addEventListener('click', () => {
+      const f = b.dataset.filter;
+      activeFilters.has(f) ? activeFilters.delete(f) : activeFilters.add(f);
+      applyFilters();
+    });
+  });
+
+  /* ---------- Init ---------- */
+  buildTicks();
+  requestAnimationFrame(updateFocus);
+})();
+</script>
+
+<script>
+(function(){
+  document.querySelectorAll('.card-media').forEach(media => {
+    const track = media.querySelector('.card-media-track');
+    const slides = Array.from(media.querySelectorAll('.card-slide'));
+    const prevBtn = media.querySelector('.card-media-arrow.prev');
+    const nextBtn = media.querySelector('.card-media-arrow.next');
+    const dotsWrap = media.querySelector('.card-media-dots');
+    let index = 0;
+
+    if (slides.length <= 1){
+      media.classList.add('single');
+      return;
+    }
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', 'Aller à l\'image ' + (i + 1));
+      dot.addEventListener('click', (e) => { e.stopPropagation(); goTo(i); });
+      dotsWrap.appendChild(dot);
+    });
+
+    function update(){
+      track.style.transform = 'translateX(-' + (index * 100) + '%)';
+      Array.from(dotsWrap.children).forEach((d, i) => d.classList.toggle('active', i === index));
+    }
+    function goTo(i){
+      index = (i + slides.length) % slides.length;
+      update();
+    }
+
+    prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(index - 1); });
+    nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(index + 1); });
+
+    update();
+  });
+})();
+</script>
+
+<script>
+(function(){
+  const items = Array.from(document.querySelectorAll('.tl-item'));
+
+  function setOpen(item, open){
+    const header = item.querySelector('.tl-header');
+    const panel = item.querySelector('.tl-panel');
+    item.classList.toggle('open', open);
+    header.setAttribute('aria-expanded', open ? 'true' : 'false');
+    panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+  }
+
+  items.forEach(item => {
+    const header = item.querySelector('.tl-header');
+    header.addEventListener('click', () => {
+      setOpen(item, header.getAttribute('aria-expanded') !== 'true');
+    });
+    header.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        header.click();
+      }
+    });
+  });
+
+  /* état initial : respecte les aria-expanded déjà posés dans le HTML */
+  items.forEach(item => {
+    const header = item.querySelector('.tl-header');
+    setOpen(item, header.getAttribute('aria-expanded') === 'true');
+  });
+
+  /* recalcule la hauteur des panneaux ouverts au redimensionnement */
+  window.addEventListener('resize', () => {
+    items.forEach(item => {
+      if (item.classList.contains('open')){
+        const panel = item.querySelector('.tl-panel');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = lightbox.querySelector('.lightbox-img');
+  const lbCaption = lightbox.querySelector('.lightbox-caption');
+  const lbPrev = lightbox.querySelector('.lightbox-arrow.prev');
+  const lbNext = lightbox.querySelector('.lightbox-arrow.next');
+  const lbClose = lightbox.querySelector('.lightbox-close');
+
+  let currentSlides = [];
+  let currentIndex = 0;
+  let lastFocused = null;
+
+  function renderCurrent(){
+    const img = currentSlides[currentIndex];
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt || '';
+    const card = img.closest('.card');
+    const title = card ? (card.querySelector('.card-title') || {}).textContent : '';
+    const count = currentSlides.length > 1 ? ' · Image ' + (currentIndex + 1) + ' / ' + currentSlides.length : '';
+    lbCaption.textContent = (title ? title.trim() : '') + count;
+    lightbox.classList.toggle('single-image', currentSlides.length <= 1);
+  }
+
+  function openLightbox(img){
+    const media = img.closest('.card-media');
+    currentSlides = media ? Array.from(media.querySelectorAll('.card-slide img')) : [img];
+    currentIndex = Math.max(currentSlides.indexOf(img), 0);
+    lastFocused = document.activeElement;
+    renderCurrent();
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+  }
+
+  function step(delta){
+    if (currentSlides.length <= 1) return;
+    currentIndex = (currentIndex + delta + currentSlides.length) % currentSlides.length;
+    renderCurrent();
+  }
+
+  document.querySelectorAll('.card-slide img').forEach(img => {
+    img.tabIndex = 0;
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', "Agrandir l'image");
+    img.addEventListener('click', () => openLightbox(img));
+    img.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        openLightbox(img);
+      }
+    });
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', () => step(-1));
+  lbNext.addEventListener('click', () => step(1));
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+  });
+})();
+</script>
+
+</body>
+</html>
