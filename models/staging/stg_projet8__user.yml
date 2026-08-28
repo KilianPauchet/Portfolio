@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: stg_projet8__user
+    columns:
+      - name: user_id
+        tests:
+          - unique
+          - not_null
+      - name: region
+        tests:
+          - not_null
